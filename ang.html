@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Quiz: Christmas in the USA</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      padding: 20px;
+    }
+    .quiz {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .answers label {
+      display: block;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 15px;
+      border: none;
+      background: #0077cc;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #005fa3;
+    }
+    .result {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="quiz">
+  <h1>Christmas in the USA 🎄</h1>
+  <div id="quiz"></div>
+  <button id="button" onclick="nextQuestion()">Dalej</button>
+  <div class="result" id="result"></div>
+</div>
+
+<script>
+const questions = [
+    {
+        q: "What food is popular at Christmas in the USA?",
+        a: ["Sushi", "Roast turkey", "Pizza"],
+        correct: 1
+    },
+    {
+        q: "What drink is popular at Christmas in the USA?",
+        a: ["Eggnog", "Cola", "Tea"],
+        correct: 0
+    },
+    {
+        q: "What decorates many houses at Christmas in the USA?",
+        a: ["Palm trees", "Christmas lights", "Flags"],
+        correct: 1
+    },
+    {
+        q: "Who brings presents to children?",
+        a: ["Easter Bunny", "Santa Claus", "Snowman"],
+        correct: 1
+    },
+    {
+        q: "What do many Americans do on Christmas Eve or Day?",
+        a: ["Go to school", "Go to church", "Go to work"],
+        correct: 1
+    },
+    {
+        q: "What dessert is popular at Christmas in the USA?",
+        a: ["Pumpkin pie", "Ice cream", "Chocolate cake"],
+        correct: 0
+    },
+    {
+        q: "What do people decorate inside their homes?",
+        a: ["Palm trees", "Christmas trees", "Flowers"],
+        correct: 1
+    },
+    {
+        q: "When do families usually exchange gifts?",
+        a: ["On Christmas morning", "On Easter", "In summer"],
+        correct: 0
+    },
+    {
+        q: "Which color lights are popular on houses?",
+        a: ["Black and white", "Colorful Christmas lights", "Green only"],
+        correct: 1
+    },
+    {
+        q: "Who is a famous Christmas character in the USA?",
+        a: ["Santa Claus", "Tooth Fairy", "Witch"],
+        correct: 0
+    },
+    {
+        q: "Which song is a famous American Christmas song?",
+        a: ["Jingle Bells", "Happy Birthday", "Shape of You"],
+        correct: 0
+    },
+    {
+        q: "What do children hang for presents?",
+        a: ["Bags", "Stockings", "Shoes"],
+        correct: 1
+    },
+    {
+        q: "Which movie is watched at Christmas in the USA?",
+        a: ["Kevin – Home Alone", "Harry Potter", "Star Wars"],
+        correct: 0
+    }
+
+];
+
+let index = 0;
+let score = 0;
+
+function loadQuestion() {
+  const quiz = document.getElementById("quiz");
+  const q = questions[index];
+  quiz.innerHTML = `
+    <div class="question">${q.q}</div>
+    <div class="answers">
+      ${q.a.map((ans, i) => `
+        <label>
+          <input type="radio" name="answer" value="${i}" /> ${ans}
+        </label>
+      `).join("")}
+    </div>
+  `;
+}
+
+function nextQuestion() {
+  const selected = document.querySelector('input[name="answer"]:checked');
+  if (!selected) return;
+
+  if (parseInt(selected.value) === questions[index].correct) {
+    score++;
+    document.getElementById("result").innerText = `Poprzednie zadanie było poprawne :)`;
+  } else {
+    document.getElementById("result").innerText = ``;
+  }
+
+  index++;
+
+  if (index < questions.length) {
+    loadQuestion();
+  } else {
+    document.getElementById("button").style.display = "none"
+    document.getElementById("quiz").innerHTML = "";
+    document.getElementById("result").innerText = `Twój wynik: ${score} / ${questions.length}`;
+  }
+}
+
+loadQuestion();
+</script>
+
+</body>
+</html>

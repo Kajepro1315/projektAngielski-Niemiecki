@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Quiz: Weihnachten im</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      padding: 20px;
+    }
+    .quiz {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .answers label {
+      display: block;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 15px;
+      border: none;
+      background: #0077cc;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #005fa3;
+    }
+    .result {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="quiz">
+  <h1>Weihnachten im 🎄</h1>
+  <div id="quiz"></div>
+  <button id="button" onclick="nextQuestion()">Dalej</button>
+  <div class="result" id="result"></div>
+</div>
+
+<script>
+const questions = [
+{
+  q: "Was isst man zu Weihnachten in Österreich?",
+  a: ["Würstchen und Braten", "Sushi", "Pizza"],
+  correct: 0
+},
+{
+  q: "Welches Getränk ist zu Weihnachten sehr beliebt?",
+  a: ["Heißer Punsch", "Cola", "Saft"],
+  correct: 0
+},
+{
+  q: "Was schmückt viele Häuser in Österreich?",
+  a: ["Weihnachtsbäume und Lichter", "Palmen", "Fahnen"],
+  correct: 0
+},
+{
+  q: "Wann treffen sich Familien zum Feiern?",
+  a: ["Am Heiligen Abend", "Am Ostersonntag", "Am Neujahrstag"],
+  correct: 0
+},
+{
+  q: "Was machen Familien am Heiligen Abend?",
+  a: ["Den Weihnachtsbaum schmücken und Geschenke tauschen",
+      "Zur Schule gehen",
+      "Arbeiten"],
+  correct: 0
+},
+{
+  q: "Welche Musik hört man zu Weihnachten in Österreich?",
+  a: ["Traditionelle Weihnachtslieder",
+      "Hip-Hop",
+      "Techno"],
+  correct: 0
+},
+{
+  q: "Was ist in der Adventszeit sehr beliebt?",
+  a: ["Weihnachtsmärkte",
+      "Sommerfeste",
+      "Sportwettkämpfe"],
+  correct: 0
+},
+{
+  q: "Wer bringt oft die Geschenke in Österreich?",
+  a: ["Das Christkind",
+      "Der Osterhase",
+      "Der Nikolaus"],
+  correct: 0
+}
+
+];
+
+let index = 0;
+let score = 0;
+
+function loadQuestion() {
+  const quiz = document.getElementById("quiz");
+  const q = questions[index];
+  quiz.innerHTML = `
+    <div class="question">${q.q}</div>
+    <div class="answers">
+      ${q.a.map((ans, i) => `
+        <label>
+          <input type="radio" name="answer" value="${i}" /> ${ans}
+        </label>
+      `).join("")}
+    </div>
+  `;
+}
+
+function nextQuestion() {
+  const selected = document.querySelector('input[name="answer"]:checked');
+  if (!selected) return;
+
+  if (parseInt(selected.value) === questions[index].correct) {
+    score++;
+    document.getElementById("result").innerText = `Poprzednie zadanie było poprawne :)`;
+  } else {
+    document.getElementById("result").innerText = ``;
+  }
+
+  index++;
+
+  if (index < questions.length) {
+    loadQuestion();
+  } else {
+    document.getElementById("button").style.display = "none"
+    document.getElementById("quiz").innerHTML = "";
+    document.getElementById("result").innerText = `Twój wynik: ${score} / ${questions.length}`;
+  }
+}
+
+loadQuestion();
+</script>
+
+</body>
+</html>
